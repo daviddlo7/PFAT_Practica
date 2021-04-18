@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Grupo nick="Seagrams">
+  <Alumno>
+    <NIU><![CDATA[100406670]]></NIU>
+    <Apellidos><![CDATA[VILLAVERDE JUAREZ]]></Apellidos>
+    <Nombre><![CDATA[JOSE ANTONIO]]></Nombre>
+    <GrupoReducido><![CDATA[g71]]></GrupoReducido>
+  </Alumno>
+  <Alumno>
+    <NIU><![CDATA[100406620]]></NIU>
+    <Apellidos><![CDATA[DE LA OSA MOSTAZO]]></Apellidos>
+    <Nombre><![CDATA[DAVID]]></Nombre>
+    <GrupoReducido><![CDATA[g71]]></GrupoReducido>
+  </Alumno>
+  <Alumno>
+    <NIU><![CDATA[100406708]]></NIU>
+    <Apellidos><![CDATA[JIMENEZ BERENGUEL]]></Apellidos>
+    <Nombre><![CDATA[ANDREA MARIA]]></Nombre>
+    <GrupoReducido><![CDATA[g71]]></GrupoReducido>
+  </Alumno>
+</Grupo>

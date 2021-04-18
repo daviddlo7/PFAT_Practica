@@ -1,0 +1,23 @@
+1- Compilar errores
+...\Practica1\java\Errors>javac -d ..\..\class *.java 
+
+2- Compilar AST
+...\Practica1\java\AST>javac -d ..\..\class *.java 
+
+3- Ejecutar el CUP
+...\Practica1\java\Parser>java -jar ..\..\class\java-cup-11b.jar parser.cup
+
+4- Compilo las clases que me produce, parser.java sym.java
+..\Practica1\java\Parser>javac -d ..\..\class *.java
+
+5- Ejecuto el JLex
+...\Practica1\java\Lexer>java JLex.Main Yylex
+
+6- Compilo las clases Java Yylex.java y LexerMain.java
+...\Practica1\java\Lexer>javac -d ..\..\class *.java 
+
+7- Compilo el archivo Main.java
+..\Practica1\java>javac -d ..\..\class Main.java
+
+8- Ejecuto cualquier .prg
+...\Practica1\ejemplos\EjemX>java Main ejemX.prg 

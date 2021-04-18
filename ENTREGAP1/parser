@@ -1,0 +1,97 @@
+package Parser;
+
+import java_cup.runtime.*;
+import AST.*;
+
+parser code {:
+public void syntax_error(Symbol s) {
+  report_error("Error de sintaxis en linea " + s.left, null);
+}
+
+public void unrecovered_syntax_error(Symbol s) throws
+  java.lang.Exception {
+  report_fatal_error("", null);
+}
+:};
+
+terminal COMA, PC, PAREN, TESIS, BEGIN, END, ASIG, AND, OR, NOT, 
+    IF, THEN, ELSE, PROG, DECL, REPEAT, UNTIL, PRINT,  
+    MAS, MENOS, MUL, Q2STR, Q2STRD, PENT, NUM, DEN, 
+    DIV, MAYOR, MENOR, IGUAL, INT2STR,OPUESTO;
+
+terminal Integer CINT,TYPE;
+terminal Boolean CLOG;
+terminal String IDENT,CSTR;
+
+non terminal Prog Prog;
+non terminal IdentList IdentList;
+non terminal StatementList StatementList;
+non terminal Body Body;
+non terminal Statement Statement;
+non terminal Exp Exp;
+non terminal LDecl LDecl;
+non terminal Decl Decl;
+
+precedence left OR;
+precedence left AND;
+precedence left NOT;
+precedence left IGUAL;
+precedence left MAYOR,MENOR;
+precedence left MAS,MENOS;
+precedence left MUL,DIV;
+precedence left OPUESTO;
+
+
+start with Prog;
+
+Prog ::= PROG IDENT:ident PAREN IdentList:identList TESIS DECL LDecl:LDecl Body:body {:RESULT = new ProgN1(ident,identList,LDecl,body); :}
+    |   PROG IDENT:ident DECL LDecl:LDecl Body:body {:RESULT = new ProgN2(ident,LDecl,body); :}
+    |   PROG IDENT:ident PAREN IdentList:identList Body:body {:RESULT = new ProgN3(ident,identList,body); :}
+    |   PROG IDENT:ident Body:body {:RESULT = new ProgN4(ident,body); :};
+
+Decl ::= TYPE:type IdentList:identList   {:RESULT = new Decl_ReglaProd(type,identList); :};
+
+LDecl ::= Decl:decl PC     {:RESULT = new LDecl_ReglaProd1(decl); :}
+        | Decl:decl PC LDecl:ldcl     {:RESULT = new LDecl_ReglaProd2(decl , ldcl); :};
+
+IdentList ::= IDENT:ident   {:RESULT = new IdentList_ReglaProd1(ident); :}
+        | IDENT:ident COMA IdentList:identList    {:RESULT = new IdentList_ReglaProd2(ident , identList); :};
+
+Body ::= BEGIN StatementList:StList END PC  {:RESULT = new Body_ReglaProd(StList); :};
+
+StatementList ::= Statement:statement PC     {:RESULT = new StatementList_ReglaProd1(statement); :}
+        | Statement:statement PC StatementList:StList    {:RESULT = new StatementList_ReglaProd2(statement , StList); :};
+
+Statement ::= IDENT:ident ASIG Exp:expresion      {:RESULT = new Statement_ReglaProd1(ident , expresion);:}
+        | PRINT PAREN Exp:expresion TESIS     {:RESULT = new Statement_ReglaProd2(expresion); :}
+        | IF Exp:exp THEN StatementList:statement END    {:RESULT = new Statement_ReglaProd3(exp, statement); :}
+        | IF Exp:exp THEN StatementList:statement1 ELSE StatementList:statement2 END    {:RESULT = new Statement_ReglaProd4(exp, statement1,statement2); :}
+        | REPEAT StatementList:statement UNTIL Exp:expresion   {:RESULT = new Statement_ReglaProd5(statement,expresion); :};
+
+
+Exp ::= IDENT:ident {:RESULT = new Exp_Identificador(ident); :}
+    | PAREN Exp:expresion TESIS {:RESULT = new Exp_EntreParentesis(expresion); :}
+    | CINT:ctedecimal {:RESULT = new Exp_NDecimal(ctedecimal); :}   
+    | Exp:expresion1 MAS Exp:expresion2  {:RESULT = new Exp_MAS(expresion1 , expresion2); :}
+    | Exp:expresion1 MENOS Exp:expresion2 {:RESULT = new Exp_MENOS(expresion1 , expresion2); :}
+    | Exp:expresion1 MUL Exp:expresion2 {:RESULT = new Exp_MUL(expresion1 , expresion2); :}
+    | MENOS Exp:expresion1 {:RESULT = new Exp_Opuesto(expresion1); :}%prec OPUESTO
+    | PENT PAREN Exp:subExpresion TESIS {:RESULT = new Exp_ParteEntera(subExpresion); :}
+    | NUM PAREN Exp:subExpresion TESIS {:RESULT = new Exp_Numerador(subExpresion); :}
+    | DEN PAREN Exp:subExpresion TESIS {:RESULT = new Exp_Denominador(subExpresion); :}
+
+
+    | Exp:expresion1 DIV Exp:expresion2 {:RESULT = new Exp_DivisionRational(expresion1,expresion2); :} 
+
+    | CSTR:string {:RESULT = new Exp_String(string); :}
+
+    | INT2STR PAREN Exp:subExpresion TESIS {:RESULT = new Exp_int2str(subExpresion); :}
+    | Q2STR PAREN Exp:subExpresion TESIS {:RESULT = new Exp_q2str(subExpresion); :}
+    | Q2STRD PAREN Exp:subExpresion COMA CINT:ctedecimal TESIS {:RESULT = new Exp_q2strdecimal(subExpresion,ctedecimal); :}
+    | CLOG:ctebool {:RESULT = new Exp_ctebool(ctebool); :}
+    | Exp:expresion1 AND Exp:expresion2 {:RESULT = new Exp_AND(expresion1,expresion2); :}
+    | Exp:expresion1 OR Exp:expresion2 {:RESULT = new Exp_OR(expresion1,expresion2); :}
+    | NOT Exp:expresion1{:RESULT = new Exp_NOT(expresion1); :}
+    | Exp:expresion1 IGUAL Exp:expresion2 {:RESULT = new Exp_Igual(expresion1,expresion2); :}
+    | Exp:expresion1 MAYOR Exp:expresion2 {:RESULT = new Exp_Mayor(expresion1,expresion2); :}
+    | Exp:expresion1 MENOR Exp:expresion2 {:RESULT = new Exp_Menor(expresion1,expresion2); :};
