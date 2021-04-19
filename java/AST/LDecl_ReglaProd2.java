@@ -10,4 +10,9 @@ public class LDecl_ReglaProd2 implements LDecl {
         this.Decl = Decl;
         this.Ldcl = Ldcl;
     }
+
+    public void computeAH1() throws DoubleDefException{
+        Decl.computeAH1();
+        Ldcl.computeAH1();
+    }
 }

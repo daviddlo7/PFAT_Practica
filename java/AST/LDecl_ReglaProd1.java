@@ -10,4 +10,7 @@ public class LDecl_ReglaProd1 implements LDecl {
         this.decl = decl;
     }
 
+    public void computeAH1() throws DoubleDefException{
+        decl.computeAH1();
+    }
 }

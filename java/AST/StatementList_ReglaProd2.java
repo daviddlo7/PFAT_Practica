@@ -11,4 +11,9 @@ public class StatementList_ReglaProd2 implements StatementList {
         this.statement = statement;
         this.StList = StList;
     }
+
+    public void computeType() throws CompilerExc {
+        statement.computeType();
+        StList.computeType();
+    }
 }

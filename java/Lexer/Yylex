@@ -6,7 +6,7 @@ import Parser.sym;
 %%
 %{
 private java_cup.runtime.Symbol tok(int k, Object value) {
- System.out.println("Token: " + k);
+ //System.out.println("Token: " + k);
   return new java_cup.runtime.Symbol(k, yyline, 0, value); 
 }
 %}
@@ -36,11 +36,11 @@ repeat		{return tok(sym.REPEAT, null); }
 until		{return tok(sym.UNTIL, null); }
 print		{return tok(sym.PRINT, null); }
 int2str		{return tok(sym.INT2STR, null); }
-parte.entera		{return tok(sym.PENT, null); }
+parte"."entera		{return tok(sym.PENT, null); }
 numerador		{return tok(sym.NUM, null); }
 denominador		{return tok(sym.DEN, null); }
 q2str		{return tok(sym.Q2STR, null); }
-q2str.decimal		{return tok(sym.Q2STRD, null); }
+q2str"."decimal		{return tok(sym.Q2STRD, null); }
 if		{return tok(sym.IF, null); }
 then		{return tok(sym.THEN, null); }
 else		{return tok(sym.ELSE, null); }

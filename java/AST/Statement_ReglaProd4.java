@@ -1,16 +1,16 @@
 package AST;
 
 import Errors.*;
-
+import Compiler.Type;
 public class Statement_ReglaProd4 implements Statement {
 
     public Exp expresion;
-    public StatementList statement1;
-    public StatementList statement2;
+    public StatementList statementList1;
+    public StatementList statementList2;
 
-    public Statement_ReglaProd4(Exp expresion, StatementList statement1, StatementList statement2) {
+    public Statement_ReglaProd4(Exp expresion, StatementList statementList1, StatementList statementList2) {
         this.expresion = expresion;
-        this.statement1 = statement1;
-        this.statement2 = statement2;
+        this.statementList1 = statementList1;
+        this.statementList2 = statementList2;
     }
 }

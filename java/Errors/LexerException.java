@@ -2,13 +2,13 @@ package Errors;
 
 public class LexerException extends CompilerExc {
 
-  private String msg;
+	private String msg;
 
-  public LexerException(String s) {
-    msg = s;
-  }
+	public LexerException(String s) {
+		msg = s;
+	}
 
-  public String toString() {
-    return msg;
-  }
+	public String toString() {
+		return msg;
+	}
 }
